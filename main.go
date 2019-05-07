@@ -4,15 +4,29 @@ import (
 	db "main/database"
 	"main/helpers"
 	"main/models"
-
-	//"log"
 	"net"
 
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
 
+func setConfig() string {
+	viper.AddConfigPath("./configs")
+	viper.SetConfigName("auth")
+	var port string
+	if err := viper.ReadInConfig(); err != nil {
+		port = ":8083"
+		SECRET = []byte("")
+	} else {
+		port = ":" + viper.GetString("port")
+		SECRET = []byte(viper.GetString("secret"))
+	}
+	return port
+}
+
 func main() {
-	lis, err := net.Listen("tcp", ":8083")
+	port := setConfig()
+	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		helpers.LogMsg("Can`t listen port ", err)
 	}
@@ -28,6 +42,6 @@ func main() {
 	}
 	defer db.Disconnect()
 
-	helpers.LogMsg("AuthServer started at 8083")
+	helpers.LogMsg("AuthServer started at", port)
 	server.Serve(lis)
 }

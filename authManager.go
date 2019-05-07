@@ -1,36 +1,37 @@
 package main
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	db "main/database"
 	"main/helpers"
 	"main/models"
 
+	"github.com/dgrijalva/jwt-go"
+
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
 	//"io/ioutil"
 	//"net/http"
 	"sync"
 	"time"
 )
 
-var SECRET = []byte("myawesomesecret")
+var SECRET []byte
 
 type AuthManager struct {
-	mu       sync.RWMutex
-	token 	 *models.JWT
-	user     *models.User
+	mu    sync.RWMutex
+	token *models.JWT
+	user  *models.User
 }
 
 func NewAuthManager() *AuthManager {
 	return &AuthManager{
-		mu:       sync.RWMutex{},
-		token:    new(models.JWT),
-		user:     new(models.User),
+		mu:    sync.RWMutex{},
+		token: new(models.JWT),
+		user:  new(models.User),
 	}
 }
-
 
 //TODO check error returns
 
@@ -67,7 +68,7 @@ func (am *AuthManager) RegisterUser(ctx context.Context, user *models.UserProto)
 	foundByEmail, _ := db.GetUserByEmail(user.Email)
 	foundByLogin, _ := db.GetUserByLogin(user.Login)
 
-	if foundByEmail != nil || foundByLogin != nil{
+	if foundByEmail != nil || foundByLogin != nil {
 		return nil, status.Errorf(codes.AlreadyExists, "Such user already exists")
 	}
 
@@ -126,4 +127,3 @@ func (am *AuthManager) ChangeUser(ctx context.Context, user *models.UserProto) (
 func (am *AuthManager) DeleteUser(ctx context.Context, token *models.JWT) (*models.Nothing, error) {
 	return &models.Nothing{}, nil
 }
-
