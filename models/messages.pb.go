@@ -22,7 +22,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type UserProto struct {
+type User struct {
 	ID                   uint64   `protobuf:"varint,1,opt,name=ID,json=iD,proto3" json:"ID"`
 	Login                string   `protobuf:"bytes,2,opt,name=login,proto3" json:"login,omitempty"`
 	Email                string   `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
@@ -30,91 +30,130 @@ type UserProto struct {
 	HashPassword         string   `protobuf:"bytes,5,opt,name=hashPassword,proto3" json:"hashPassword,omitempty"`
 	Score                uint64   `protobuf:"varint,6,opt,name=score,proto3" json:"score"`
 	Picture              string   `protobuf:"bytes,7,opt,name=picture,proto3" json:"picture,omitempty"`
-	Games                uint64   `protobuf:"varint,8,opt,name=games,proto3" json:"games"`
+	Count                uint64   `protobuf:"varint,8,opt,name=count,proto3" json:"count"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UserProto) Reset()         { *m = UserProto{} }
-func (m *UserProto) String() string { return proto.CompactTextString(m) }
-func (*UserProto) ProtoMessage()    {}
-func (*UserProto) Descriptor() ([]byte, []int) {
+func (m *User) Reset()         { *m = User{} }
+func (m *User) String() string { return proto.CompactTextString(m) }
+func (*User) ProtoMessage()    {}
+func (*User) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4dc296cbfe5ffcd5, []int{0}
 }
 
-func (m *UserProto) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserProto.Unmarshal(m, b)
+func (m *User) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_User.Unmarshal(m, b)
 }
-func (m *UserProto) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserProto.Marshal(b, m, deterministic)
+func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_User.Marshal(b, m, deterministic)
 }
-func (m *UserProto) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserProto.Merge(m, src)
+func (m *User) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_User.Merge(m, src)
 }
-func (m *UserProto) XXX_Size() int {
-	return xxx_messageInfo_UserProto.Size(m)
+func (m *User) XXX_Size() int {
+	return xxx_messageInfo_User.Size(m)
 }
-func (m *UserProto) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserProto.DiscardUnknown(m)
+func (m *User) XXX_DiscardUnknown() {
+	xxx_messageInfo_User.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserProto proto.InternalMessageInfo
+var xxx_messageInfo_User proto.InternalMessageInfo
 
-func (m *UserProto) GetID() uint64 {
+func (m *User) GetID() uint64 {
 	if m != nil {
 		return m.ID
 	}
 	return 0
 }
 
-func (m *UserProto) GetLogin() string {
+func (m *User) GetLogin() string {
 	if m != nil {
 		return m.Login
 	}
 	return ""
 }
 
-func (m *UserProto) GetEmail() string {
+func (m *User) GetEmail() string {
 	if m != nil {
 		return m.Email
 	}
 	return ""
 }
 
-func (m *UserProto) GetPassword() string {
+func (m *User) GetPassword() string {
 	if m != nil {
 		return m.Password
 	}
 	return ""
 }
 
-func (m *UserProto) GetHashPassword() string {
+func (m *User) GetHashPassword() string {
 	if m != nil {
 		return m.HashPassword
 	}
 	return ""
 }
 
-func (m *UserProto) GetScore() uint64 {
+func (m *User) GetScore() uint64 {
 	if m != nil {
 		return m.Score
 	}
 	return 0
 }
 
-func (m *UserProto) GetPicture() string {
+func (m *User) GetPicture() string {
 	if m != nil {
 		return m.Picture
 	}
 	return ""
 }
 
-func (m *UserProto) GetGames() uint64 {
+func (m *User) GetCount() uint64 {
 	if m != nil {
-		return m.Games
+		return m.Count
 	}
 	return 0
+}
+
+type UsersArray struct {
+	Users                []*User  `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UsersArray) Reset()         { *m = UsersArray{} }
+func (m *UsersArray) String() string { return proto.CompactTextString(m) }
+func (*UsersArray) ProtoMessage()    {}
+func (*UsersArray) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4dc296cbfe5ffcd5, []int{1}
+}
+
+func (m *UsersArray) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UsersArray.Unmarshal(m, b)
+}
+func (m *UsersArray) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UsersArray.Marshal(b, m, deterministic)
+}
+func (m *UsersArray) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UsersArray.Merge(m, src)
+}
+func (m *UsersArray) XXX_Size() int {
+	return xxx_messageInfo_UsersArray.Size(m)
+}
+func (m *UsersArray) XXX_DiscardUnknown() {
+	xxx_messageInfo_UsersArray.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UsersArray proto.InternalMessageInfo
+
+func (m *UsersArray) GetUsers() []*User {
+	if m != nil {
+		return m.Users
+	}
+	return nil
 }
 
 type JWT struct {
@@ -128,7 +167,7 @@ func (m *JWT) Reset()         { *m = JWT{} }
 func (m *JWT) String() string { return proto.CompactTextString(m) }
 func (*JWT) ProtoMessage()    {}
 func (*JWT) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4dc296cbfe5ffcd5, []int{1}
+	return fileDescriptor_4dc296cbfe5ffcd5, []int{2}
 }
 
 func (m *JWT) XXX_Unmarshal(b []byte) error {
@@ -156,6 +195,61 @@ func (m *JWT) GetToken() string {
 	return ""
 }
 
+type LeadersInfo struct {
+	ID                   uint64   `protobuf:"varint,1,opt,name=ID,json=iD,proto3" json:"ID"`
+	Count                uint64   `protobuf:"varint,2,opt,name=Count,json=count,proto3" json:"Count"`
+	UsersOnPage          uint64   `protobuf:"varint,3,opt,name=UsersOnPage,json=usersOnPage,proto3" json:"UsersOnPage"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LeadersInfo) Reset()         { *m = LeadersInfo{} }
+func (m *LeadersInfo) String() string { return proto.CompactTextString(m) }
+func (*LeadersInfo) ProtoMessage()    {}
+func (*LeadersInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4dc296cbfe5ffcd5, []int{3}
+}
+
+func (m *LeadersInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_LeadersInfo.Unmarshal(m, b)
+}
+func (m *LeadersInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_LeadersInfo.Marshal(b, m, deterministic)
+}
+func (m *LeadersInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LeadersInfo.Merge(m, src)
+}
+func (m *LeadersInfo) XXX_Size() int {
+	return xxx_messageInfo_LeadersInfo.Size(m)
+}
+func (m *LeadersInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_LeadersInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LeadersInfo proto.InternalMessageInfo
+
+func (m *LeadersInfo) GetID() uint64 {
+	if m != nil {
+		return m.ID
+	}
+	return 0
+}
+
+func (m *LeadersInfo) GetCount() uint64 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
+func (m *LeadersInfo) GetUsersOnPage() uint64 {
+	if m != nil {
+		return m.UsersOnPage
+	}
+	return 0
+}
+
 type Nothing struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -166,7 +260,7 @@ func (m *Nothing) Reset()         { *m = Nothing{} }
 func (m *Nothing) String() string { return proto.CompactTextString(m) }
 func (*Nothing) ProtoMessage()    {}
 func (*Nothing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4dc296cbfe5ffcd5, []int{2}
+	return fileDescriptor_4dc296cbfe5ffcd5, []int{4}
 }
 
 func (m *Nothing) XXX_Unmarshal(b []byte) error {
@@ -188,35 +282,43 @@ func (m *Nothing) XXX_DiscardUnknown() {
 var xxx_messageInfo_Nothing proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*UserProto)(nil), "models.UserProto")
+	proto.RegisterType((*User)(nil), "models.User")
+	proto.RegisterType((*UsersArray)(nil), "models.UsersArray")
 	proto.RegisterType((*JWT)(nil), "models.JWT")
+	proto.RegisterType((*LeadersInfo)(nil), "models.LeadersInfo")
 	proto.RegisterType((*Nothing)(nil), "models.Nothing")
 }
 
 func init() { proto.RegisterFile("messages.proto", fileDescriptor_4dc296cbfe5ffcd5) }
 
 var fileDescriptor_4dc296cbfe5ffcd5 = []byte{
-	// 306 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xcf, 0x6a, 0x32, 0x31,
-	0x14, 0xc5, 0x1d, 0xff, 0x8d, 0x73, 0x15, 0x3f, 0xbe, 0xd0, 0x45, 0xb0, 0x1b, 0xc9, 0x4a, 0x68,
-	0x2b, 0xc5, 0x3e, 0x41, 0x51, 0x28, 0x95, 0x52, 0x64, 0xb0, 0xb8, 0x4e, 0xf5, 0x92, 0x04, 0x67,
-	0x26, 0x92, 0x44, 0xfa, 0x94, 0x7d, 0xa4, 0x42, 0x49, 0xd2, 0x91, 0x16, 0x29, 0x74, 0xf9, 0x3b,
-	0xe7, 0xdc, 0x5c, 0xee, 0x21, 0x30, 0x2c, 0xd1, 0x5a, 0x2e, 0xd0, 0x4e, 0x0f, 0x46, 0x3b, 0x4d,
-	0xba, 0xa5, 0xde, 0x61, 0x61, 0xd9, 0x7b, 0x02, 0xd9, 0x8b, 0x45, 0xb3, 0x0a, 0xea, 0x10, 0x9a,
-	0x8f, 0x0b, 0x9a, 0x8c, 0x93, 0x49, 0x3b, 0x6f, 0xaa, 0x05, 0xb9, 0x80, 0x4e, 0xa1, 0x85, 0xaa,
-	0x68, 0x73, 0x9c, 0x4c, 0xb2, 0x3c, 0x82, 0x57, 0xb1, 0xe4, 0xaa, 0xa0, 0xad, 0xa8, 0x06, 0x20,
-	0x23, 0xe8, 0x1d, 0xb8, 0xb5, 0x6f, 0xda, 0xec, 0x68, 0x3b, 0x18, 0x27, 0x26, 0x0c, 0x06, 0x92,
-	0x5b, 0xb9, 0xaa, 0xfd, 0x4e, 0xf0, 0x7f, 0x68, 0xfe, 0x55, 0xbb, 0xd5, 0x06, 0x69, 0x37, 0xac,
-	0x8f, 0x40, 0x28, 0xa4, 0x07, 0xb5, 0x75, 0x47, 0x83, 0x34, 0x0d, 0x43, 0x35, 0xfa, 0xbc, 0xe0,
-	0x25, 0x5a, 0xda, 0x8b, 0xf9, 0x00, 0xec, 0x12, 0x5a, 0xcb, 0xcd, 0xda, 0x9b, 0x4e, 0xef, 0xb1,
-	0x0a, 0xb7, 0x64, 0x79, 0x04, 0x96, 0x41, 0xfa, 0xac, 0x9d, 0x54, 0x95, 0x98, 0x7d, 0x24, 0xd0,
-	0xbf, 0x3f, 0x3a, 0x39, 0x97, 0xb8, 0xdd, 0xa3, 0x21, 0x37, 0x90, 0x3d, 0xf9, 0xe3, 0x7c, 0x17,
-	0xe4, 0xff, 0x34, 0xb6, 0x33, 0x3d, 0x35, 0x33, 0xea, 0xd7, 0xd2, 0x72, 0xb3, 0x66, 0x0d, 0x72,
-	0x0b, 0x83, 0x1c, 0x85, 0xb2, 0x0e, 0xcd, 0x1f, 0x27, 0xae, 0x20, 0x7d, 0x40, 0x17, 0xc2, 0xdf,
-	0x9d, 0xd1, 0xf9, 0x24, 0x6b, 0x90, 0x19, 0xc0, 0x5c, 0xf2, 0x4a, 0xe0, 0x6f, 0x8f, 0xff, 0xab,
-	0xa5, 0xaf, 0x7b, 0x58, 0x83, 0x5c, 0x03, 0x2c, 0xb0, 0x40, 0x87, 0xe7, 0x3b, 0xce, 0xd3, 0xaf,
-	0xdd, 0xf0, 0x0d, 0xee, 0x3e, 0x03, 0x00, 0x00, 0xff, 0xff, 0xdc, 0xee, 0x7e, 0x99, 0x18, 0x02,
-	0x00, 0x00,
+	// 404 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0xc1, 0x6e, 0xd3, 0x40,
+	0x14, 0xb4, 0x1d, 0x27, 0xae, 0x9f, 0xad, 0x82, 0x16, 0x0e, 0x2b, 0x73, 0xb1, 0xf6, 0x80, 0x2c,
+	0x01, 0x11, 0x2a, 0x27, 0xb8, 0x55, 0x89, 0x84, 0x5a, 0x55, 0x50, 0x59, 0xad, 0x7a, 0x5e, 0x9c,
+	0x87, 0x6d, 0xd5, 0xf1, 0x46, 0xbb, 0x6b, 0x21, 0xfe, 0x90, 0xcf, 0xe0, 0x53, 0xd0, 0xee, 0xc6,
+	0xe0, 0x90, 0x48, 0x3d, 0xce, 0x9b, 0x79, 0xcf, 0x33, 0xe3, 0x85, 0xf3, 0x2d, 0x2a, 0xc5, 0x6b,
+	0x54, 0xcb, 0x9d, 0x14, 0x5a, 0x90, 0xc5, 0x56, 0x6c, 0xb0, 0x53, 0xec, 0x97, 0x0f, 0xe1, 0xbd,
+	0x42, 0x49, 0xce, 0x21, 0xb8, 0x5a, 0x53, 0x3f, 0xf7, 0x8b, 0xb0, 0x0c, 0xda, 0x35, 0x79, 0x09,
+	0xf3, 0x4e, 0xd4, 0x6d, 0x4f, 0x83, 0xdc, 0x2f, 0xe2, 0xd2, 0x01, 0x33, 0xc5, 0x2d, 0x6f, 0x3b,
+	0x3a, 0x73, 0x53, 0x0b, 0x48, 0x06, 0x67, 0x3b, 0xae, 0xd4, 0x0f, 0x21, 0x37, 0x34, 0xb4, 0xc4,
+	0x5f, 0x4c, 0x18, 0xa4, 0x0d, 0x57, 0xcd, 0xed, 0xc8, 0xcf, 0x2d, 0x7f, 0x30, 0x33, 0x57, 0x55,
+	0x25, 0x24, 0xd2, 0x85, 0xfd, 0xbc, 0x03, 0x84, 0x42, 0xb4, 0x6b, 0x2b, 0x3d, 0x48, 0xa4, 0x91,
+	0x5d, 0x1a, 0xa1, 0xd1, 0x57, 0x62, 0xe8, 0x35, 0x3d, 0x73, 0x7a, 0x0b, 0xd8, 0x7b, 0x00, 0x93,
+	0x44, 0x5d, 0x4a, 0xc9, 0x7f, 0x12, 0x06, 0xf3, 0xc1, 0x20, 0xea, 0xe7, 0xb3, 0x22, 0xb9, 0x48,
+	0x97, 0x2e, 0xf0, 0xd2, 0x48, 0x4a, 0x47, 0xb1, 0x57, 0x30, 0xbb, 0x7e, 0xb8, 0x33, 0xe7, 0xb4,
+	0x78, 0xc4, 0xde, 0xa6, 0x8f, 0x4b, 0x07, 0xd8, 0x3d, 0x24, 0x37, 0xc8, 0x37, 0x28, 0xd5, 0x55,
+	0xff, 0x5d, 0x9c, 0xea, 0x67, 0x65, 0x3d, 0x04, 0x13, 0x0f, 0x24, 0x87, 0xc4, 0x7a, 0xf8, 0xda,
+	0xdf, 0xf2, 0x1a, 0x6d, 0x4b, 0x61, 0x99, 0x0c, 0xff, 0x46, 0x2c, 0x86, 0xe8, 0x8b, 0xd0, 0x4d,
+	0xdb, 0xd7, 0x17, 0xbf, 0x03, 0x48, 0x2e, 0x07, 0xdd, 0xac, 0x1a, 0xac, 0x1e, 0x51, 0x92, 0x02,
+	0xe2, 0x1b, 0xd3, 0xb2, 0xfd, 0x1f, 0x07, 0x86, 0xb3, 0x64, 0x44, 0xd7, 0x0f, 0x77, 0xcc, 0x23,
+	0x6f, 0x20, 0x2d, 0xb1, 0x6e, 0x95, 0x46, 0xf9, 0xb4, 0xf8, 0x35, 0x44, 0x9f, 0x51, 0x5b, 0xdd,
+	0x94, 0xc9, 0x0e, 0x96, 0x98, 0x47, 0x3e, 0x42, 0xba, 0xd7, 0xb9, 0x06, 0x5f, 0x8c, 0xfc, 0xa4,
+	0x86, 0x8c, 0x4c, 0x97, 0x5c, 0xd5, 0xcc, 0x23, 0x9f, 0xe0, 0xf9, 0x7e, 0xd5, 0x76, 0x62, 0x0b,
+	0x7b, 0x36, 0x2a, 0xf7, 0x71, 0xb3, 0x53, 0xf7, 0x98, 0x47, 0xde, 0x01, 0xac, 0x1a, 0xde, 0xd7,
+	0x78, 0x22, 0xc9, 0xff, 0x37, 0x98, 0x47, 0xde, 0x02, 0xac, 0xb1, 0x43, 0x8d, 0xc7, 0x81, 0x8e,
+	0xd5, 0xdf, 0x16, 0xf6, 0xb5, 0x7f, 0xf8, 0x13, 0x00, 0x00, 0xff, 0xff, 0x2a, 0xff, 0xa4, 0x83,
+	0xff, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -231,11 +333,13 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AuthCheckerClient interface {
-	LoginUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*JWT, error)
-	RegisterUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*JWT, error)
+	LoginUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*JWT, error)
+	RegisterUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*JWT, error)
 	//GetUser() also checks JWT. If token if invalid, nil will be returned.
-	GetUser(ctx context.Context, in *JWT, opts ...grpc.CallOption) (*UserProto, error)
-	ChangeUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*Nothing, error)
+	GetUser(ctx context.Context, in *JWT, opts ...grpc.CallOption) (*User, error)
+	GetUserArray(ctx context.Context, in *LeadersInfo, opts ...grpc.CallOption) (*UsersArray, error)
+	GetUserCountInfo(ctx context.Context, in *Nothing, opts ...grpc.CallOption) (*LeadersInfo, error)
+	ChangeUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Nothing, error)
 	DeleteUser(ctx context.Context, in *JWT, opts ...grpc.CallOption) (*Nothing, error)
 }
 
@@ -247,7 +351,7 @@ func NewAuthCheckerClient(cc *grpc.ClientConn) AuthCheckerClient {
 	return &authCheckerClient{cc}
 }
 
-func (c *authCheckerClient) LoginUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*JWT, error) {
+func (c *authCheckerClient) LoginUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*JWT, error) {
 	out := new(JWT)
 	err := c.cc.Invoke(ctx, "/models.AuthChecker/LoginUser", in, out, opts...)
 	if err != nil {
@@ -256,7 +360,7 @@ func (c *authCheckerClient) LoginUser(ctx context.Context, in *UserProto, opts .
 	return out, nil
 }
 
-func (c *authCheckerClient) RegisterUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*JWT, error) {
+func (c *authCheckerClient) RegisterUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*JWT, error) {
 	out := new(JWT)
 	err := c.cc.Invoke(ctx, "/models.AuthChecker/RegisterUser", in, out, opts...)
 	if err != nil {
@@ -265,8 +369,8 @@ func (c *authCheckerClient) RegisterUser(ctx context.Context, in *UserProto, opt
 	return out, nil
 }
 
-func (c *authCheckerClient) GetUser(ctx context.Context, in *JWT, opts ...grpc.CallOption) (*UserProto, error) {
-	out := new(UserProto)
+func (c *authCheckerClient) GetUser(ctx context.Context, in *JWT, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
 	err := c.cc.Invoke(ctx, "/models.AuthChecker/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -274,7 +378,25 @@ func (c *authCheckerClient) GetUser(ctx context.Context, in *JWT, opts ...grpc.C
 	return out, nil
 }
 
-func (c *authCheckerClient) ChangeUser(ctx context.Context, in *UserProto, opts ...grpc.CallOption) (*Nothing, error) {
+func (c *authCheckerClient) GetUserArray(ctx context.Context, in *LeadersInfo, opts ...grpc.CallOption) (*UsersArray, error) {
+	out := new(UsersArray)
+	err := c.cc.Invoke(ctx, "/models.AuthChecker/GetUserArray", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authCheckerClient) GetUserCountInfo(ctx context.Context, in *Nothing, opts ...grpc.CallOption) (*LeadersInfo, error) {
+	out := new(LeadersInfo)
+	err := c.cc.Invoke(ctx, "/models.AuthChecker/GetUserCountInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authCheckerClient) ChangeUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Nothing, error) {
 	out := new(Nothing)
 	err := c.cc.Invoke(ctx, "/models.AuthChecker/ChangeUser", in, out, opts...)
 	if err != nil {
@@ -294,11 +416,13 @@ func (c *authCheckerClient) DeleteUser(ctx context.Context, in *JWT, opts ...grp
 
 // AuthCheckerServer is the server API for AuthChecker service.
 type AuthCheckerServer interface {
-	LoginUser(context.Context, *UserProto) (*JWT, error)
-	RegisterUser(context.Context, *UserProto) (*JWT, error)
+	LoginUser(context.Context, *User) (*JWT, error)
+	RegisterUser(context.Context, *User) (*JWT, error)
 	//GetUser() also checks JWT. If token if invalid, nil will be returned.
-	GetUser(context.Context, *JWT) (*UserProto, error)
-	ChangeUser(context.Context, *UserProto) (*Nothing, error)
+	GetUser(context.Context, *JWT) (*User, error)
+	GetUserArray(context.Context, *LeadersInfo) (*UsersArray, error)
+	GetUserCountInfo(context.Context, *Nothing) (*LeadersInfo, error)
+	ChangeUser(context.Context, *User) (*Nothing, error)
 	DeleteUser(context.Context, *JWT) (*Nothing, error)
 }
 
@@ -307,7 +431,7 @@ func RegisterAuthCheckerServer(s *grpc.Server, srv AuthCheckerServer) {
 }
 
 func _AuthChecker_LoginUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserProto)
+	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -319,13 +443,13 @@ func _AuthChecker_LoginUser_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/models.AuthChecker/LoginUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthCheckerServer).LoginUser(ctx, req.(*UserProto))
+		return srv.(AuthCheckerServer).LoginUser(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AuthChecker_RegisterUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserProto)
+	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -337,7 +461,7 @@ func _AuthChecker_RegisterUser_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/models.AuthChecker/RegisterUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthCheckerServer).RegisterUser(ctx, req.(*UserProto))
+		return srv.(AuthCheckerServer).RegisterUser(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -360,8 +484,44 @@ func _AuthChecker_GetUser_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthChecker_GetUserArray_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeadersInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthCheckerServer).GetUserArray(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/models.AuthChecker/GetUserArray",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthCheckerServer).GetUserArray(ctx, req.(*LeadersInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthChecker_GetUserCountInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Nothing)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthCheckerServer).GetUserCountInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/models.AuthChecker/GetUserCountInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthCheckerServer).GetUserCountInfo(ctx, req.(*Nothing))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthChecker_ChangeUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserProto)
+	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -373,7 +533,7 @@ func _AuthChecker_ChangeUser_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/models.AuthChecker/ChangeUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthCheckerServer).ChangeUser(ctx, req.(*UserProto))
+		return srv.(AuthCheckerServer).ChangeUser(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -411,6 +571,14 @@ var _AuthChecker_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _AuthChecker_GetUser_Handler,
+		},
+		{
+			MethodName: "GetUserArray",
+			Handler:    _AuthChecker_GetUserArray_Handler,
+		},
+		{
+			MethodName: "GetUserCountInfo",
+			Handler:    _AuthChecker_GetUserCountInfo_Handler,
 		},
 		{
 			MethodName: "ChangeUser",

@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"auth/models"
 	"testing"
 )
 
@@ -16,4 +17,10 @@ func TestPasswords(t *testing.T) {
 
 func TestLogs(t *testing.T) {
 	LogMsg("hello world")
+}
+
+func TestModelToProtoAndProtoToModel(t *testing.T) {
+	user := &models.User{}
+	userProto := ModelToProto(user)
+	ProtoToModel(userProto)
 }

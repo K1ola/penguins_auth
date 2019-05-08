@@ -1,16 +1,16 @@
 package database
 
 import (
+	"auth/helpers"
+	"auth/models"
 	"database/sql"
-	"main/helpers"
-	"main/models"
 )
 
-func RowsToUsers(rows *sql.Rows) []models.User {
-	users := []models.User{}
+func RowsToUsers(rows *sql.Rows) []*models.User {
+	users := []*models.User{}
 	defer rows.Close()
 	for rows.Next() {
-		entry := models.User{}
+		entry := new(models.User)
 		if err := rows.Scan(&entry.Login, &entry.Score, &entry.Email); err == nil {
 			helpers.LogMsg(err)
 		}
