@@ -143,8 +143,8 @@ FROM users
 ORDER BY score DESC
 LIMIT ` + strconv.Itoa(usersPerPage) + ` OFFSET $1`
 
-func GetLeaders(id int) ([]models.User, error) {
-	var users []models.User
+func GetLeaders(id int) ([]*models.User, error) {
+	var users []*models.User
 	rows, err := Query(getLeadersPage, (id-1)*3)
 	if err != nil {
 		helpers.LogMsg(err)
@@ -158,15 +158,22 @@ func GetLeaders(id int) ([]models.User, error) {
 const selectUsersCount = `
 SELECT COUNT(*) from users;`
 
-func UsersCount() (models.LeadersInfo, error) {
+func UsersCount() (*models.LeadersInfo, error) {
 	var info models.LeadersInfo
 	err := connection.QueryRow(selectUsersCount).Scan(&info.Count)
+	ptrInfo := new(models.LeadersInfo)
 	if err != nil {
 		helpers.LogMsg(err)
-		return info, err
+		ptrInfo.ID = info.ID
+		ptrInfo.Count = info.Count
+		ptrInfo.UsersOnPage = info.UsersOnPage
+		return ptrInfo, err
 	}
 	info.UsersOnPage = usersPerPage
-	return info, nil
+	ptrInfo.ID = info.ID
+	ptrInfo.Count = info.Count
+	ptrInfo.UsersOnPage = info.UsersOnPage
+	return ptrInfo, nil
 }
 
 const iterateGame = `

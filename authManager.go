@@ -21,6 +21,8 @@ type AuthManager struct {
 	mu       sync.RWMutex
 	token 	 *models.JWT
 	user     *models.User
+	userArray *models.UsersArray
+	leaders *models.LeadersInfo
 }
 
 func NewAuthManager() *AuthManager {
@@ -28,6 +30,8 @@ func NewAuthManager() *AuthManager {
 		mu:       sync.RWMutex{},
 		token:    new(models.JWT),
 		user:     new(models.User),
+		userArray: new(models.UsersArray),
+		leaders: new(models.LeadersInfo),
 	}
 }
 
@@ -112,6 +116,17 @@ func (am *AuthManager) GetUser(ctx context.Context, token *models.JWT) (*models.
 		return nil, status.Errorf(codes.Unknown, "Unauthorized")
 	}
 	return user, nil
+}
+
+func (am *AuthManager) GetUserArray(ctx context.Context, leaders *models.LeadersInfo) (*models.UsersArray, error) {
+	am.userArray.Users, _ = db.GetLeaders(int(leaders.ID))
+	//fmt.Println(err)
+	return am.userArray, nil
+}
+
+func (am *AuthManager) GetUserCountInfo(ctx context.Context, nothing *models.Nothing) (*models.LeadersInfo, error) {
+	am.leaders, _ = db.UsersCount()
+	return am.leaders, nil
 }
 
 func (am *AuthManager) ChangeUser(ctx context.Context, user *models.User) (*models.Nothing, error) {

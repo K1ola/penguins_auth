@@ -27,6 +27,12 @@ message JWT {
     string token = 1;
 }
 
+message LeadersInfo {
+    uint64 ID = 1;
+    uint64 Count = 2;
+    uint64 UsersOnPage = 3;
+}
+
 message Nothing {}
 
 service AuthChecker {
@@ -34,7 +40,8 @@ service AuthChecker {
     rpc RegisterUser (User) returns (JWT) {}
     //GetUser() also checks JWT. If token if invalid, nil will be returned.
     rpc GetUser (JWT) returns (User) {}
-    rpc GetUserArray (Nothing) returns (UsersArray) {}
+    rpc GetUserArray (LeadersInfo) returns (UsersArray) {}
+    rpc GetUserCountInfo (Nothing) returns (LeadersInfo) {}
     rpc ChangeUser (User) returns (Nothing) {}
     rpc DeleteUser (JWT) returns (Nothing) {}
 }
