@@ -1,8 +1,8 @@
 package database
 
 import (
-	"main/helpers"
-	"main/models"
+	"auth/helpers"
+	"auth/models"
 	"strconv"
 
 	"github.com/jackc/pgx"
@@ -45,7 +45,7 @@ func UpdateUser(user models.User, oldEmail string) (models.User, error) {
 		helpers.LogMsg(err)
 		return user, err
 	}
-	user.Picture = "http://localhost:8081/data/" + user.Picture
+	user.Picture = ImagesAddress + user.Picture
 	return user, nil
 }
 
@@ -66,7 +66,7 @@ func UpdateUserByID(user *models.User, id uint) (*models.User, error) {
 		helpers.LogMsg(err)
 		return user, err
 	}
-	user.Picture = "http://localhost:8081/data/" + user.Picture
+	user.Picture = ImagesAddress + user.Picture
 	return user, nil
 }
 
@@ -95,7 +95,7 @@ func GetUserByEmail(email string) (*models.User, error) {
 	if err != nil {
 		return nil, err
 	}
-	user.Picture = "http://localhost:8081/data/" + user.Picture
+	user.Picture = ImagesAddress + user.Picture
 	return &user, nil
 }
 
@@ -112,10 +112,9 @@ func GetUserByID(id uint) (*models.User, error) {
 		helpers.LogMsg(err)
 		return nil, err
 	}
-	user.Picture = "http://localhost:8081/data/" + user.Picture
+	user.Picture = ImagesAddress + user.Picture
 	return &user, nil
 }
-
 
 const selectByLogin = `
 SELECT users.id, login, email, hashpassword, score, name, games
@@ -130,10 +129,9 @@ func GetUserByLogin(login string) (*models.User, error) {
 		helpers.LogMsg(err)
 		return nil, err
 	}
-	user.Picture = "http://localhost:8081/data/" + user.Picture
+	user.Picture = ImagesAddress + user.Picture
 	return &user, nil
 }
-
 
 const usersPerPage = 3
 

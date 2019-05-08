@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"main/models"
+	"auth/models"
 	"testing"
 	"time"
 
@@ -108,13 +108,13 @@ func TestCreateUser(t *testing.T) {
 		AddRow(10, "name", 5).
 		RowError(1, fmt.Errorf("error"))
 	mock.ExpectQuery("UPDATE").WillReturnRows(rows)
-	UpdateUserByID(user, 1)
+	UpdateUserByID(&user, 1)
 
 	rows = sqlmock.NewRows([]string{"games", "name", "score"}).
 		AddRow(10, "name", 5).
 		RowError(1, fmt.Errorf("error"))
 	mock.ExpectQuery("UPDATE").WillReturnError(fmt.Errorf("some error"))
-	UpdateUserByID(user, 1)
+	UpdateUserByID(&user, 1)
 
 	rows = sqlmock.NewRows([]string{"games", "name", "score"}).
 		AddRow(10, "name", 5).
@@ -127,5 +127,18 @@ func TestCreateUser(t *testing.T) {
 		RowError(1, fmt.Errorf("error"))
 	mock.ExpectQuery("UPDATE").WillReturnError(fmt.Errorf("some error"))
 	UpdateUser(user, "login@mail.ru")
+	rows = sqlmock.NewRows([]string{"id", "login", "email", "hashpassword", "score", "name", "games"}).
+		AddRow(1, "login", "login@mail.ru", "hdfbkfbdj", 10, "name", "5").
+		RowError(1, fmt.Errorf("error"))
+	mock.ExpectQuery("SELECT").WillReturnRows(rows)
+
+	GetUserByLogin("login")
+	rows = sqlmock.NewRows([]string{"count(*)"}).
+		AddRow(1).
+		RowError(1, fmt.Errorf("error"))
+	mock.ExpectQuery("SELECT").WillReturnRows(rows)
+	UsersCount()
+	
 	Disconnect()
+	initConfig()
 }
