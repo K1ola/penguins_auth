@@ -1,9 +1,9 @@
 package main
 
 import (
-	db "main/database"
-	"main/helpers"
-	"main/models"
+	db "auth/database"
+	"auth/helpers"
+	"auth/models"
 
 	"github.com/dgrijalva/jwt-go"
 

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"main/models"
+	"auth/models"
 )
 
 func DeleteCookie(w *http.ResponseWriter, cookie *http.Cookie) {

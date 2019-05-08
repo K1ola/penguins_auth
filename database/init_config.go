@@ -1,8 +1,8 @@
 package database
 
 import (
+	"auth/helpers"
 	sq "database/sql"
-	"main/helpers"
 	"strconv"
 
 	"github.com/jackc/pgx"

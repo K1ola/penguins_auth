@@ -1,9 +1,9 @@
 package database
 
 import (
+	"auth/helpers"
+	"auth/models"
 	"database/sql"
-	"main/helpers"
-	"main/models"
 )
 
 func RowsToUsers(rows *sql.Rows) []models.User {

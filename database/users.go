@@ -1,8 +1,8 @@
 package database
 
 import (
-	"main/helpers"
-	"main/models"
+	"auth/helpers"
+	"auth/models"
 	"strconv"
 
 	"github.com/jackc/pgx"
@@ -116,7 +116,6 @@ func GetUserByID(id uint) (*models.User, error) {
 	return &user, nil
 }
 
-
 const selectByLogin = `
 SELECT users.id, login, email, hashpassword, score, name, games
 FROM users, pictures
@@ -133,7 +132,6 @@ func GetUserByLogin(login string) (*models.User, error) {
 	user.Picture = ImagesAddress + user.Picture
 	return &user, nil
 }
-
 
 const usersPerPage = 3
 
