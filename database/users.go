@@ -40,7 +40,7 @@ RETURNING games, name, score`
 
 func UpdateUser(user models.User, oldEmail string) (models.User, error) {
 	user.Password = ""
-	err := connection.QueryRow(updateUserByEmail, oldEmail, user.Login, user.Email).Scan(&user.Score, &user.Picture, &user.Games)
+	err := connection.QueryRow(updateUserByEmail, oldEmail, user.Login, user.Email).Scan(&user.Score, &user.Picture, &user.Score)
 	if err != nil {
 		helpers.LogMsg(err)
 		return user, err
@@ -61,7 +61,7 @@ RETURNING games, name, score`
 
 func UpdateUserByID(user *models.User, id uint) (*models.User, error) {
 	user.Password = ""
-	err := connection.QueryRow(updateUserByID, id, user.Login, user.Email).Scan(&user.Score, &user.Picture, &user.Games)
+	err := connection.QueryRow(updateUserByID, id, user.Login, user.Email).Scan(&user.Score, &user.Picture, &user.Count)
 	if err != nil {
 		helpers.LogMsg(err)
 		return user, err
@@ -91,7 +91,7 @@ AND users.picture = pictures.id`
 
 func GetUserByEmail(email string) (*models.User, error) {
 	var user models.User
-	err := connection.QueryRow(selectByEmail, email).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Games)
+	err := connection.QueryRow(selectByEmail, email).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Count)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ AND users.picture = pictures.id`
 
 func GetUserByID(id uint) (*models.User, error) {
 	var user models.User
-	err := connection.QueryRow(selectByID, id).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Games)
+	err := connection.QueryRow(selectByID, id).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Count)
 	if err != nil {
 		helpers.LogMsg(err)
 		return nil, err
@@ -124,7 +124,7 @@ AND users.picture = pictures.id`
 
 func GetUserByLogin(login string) (*models.User, error) {
 	var user models.User
-	err := connection.QueryRow(selectByLogin, login).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Games)
+	err := connection.QueryRow(selectByLogin, login).Scan(&user.ID, &user.Login, &user.Email, &user.HashPassword, &user.Score, &user.Picture, &user.Count)
 	if err != nil {
 		helpers.LogMsg(err)
 		return nil, err
@@ -141,8 +141,8 @@ FROM users
 ORDER BY score DESC
 LIMIT ` + strconv.Itoa(usersPerPage) + ` OFFSET $1`
 
-func GetLeaders(id int) ([]models.User, error) {
-	var users []models.User
+func GetLeaders(id int) ([]*models.User, error) {
+	var users []*models.User
 	rows, err := Query(getLeadersPage, (id-1)*3)
 	if err != nil {
 		helpers.LogMsg(err)
@@ -156,15 +156,22 @@ func GetLeaders(id int) ([]models.User, error) {
 const selectUsersCount = `
 SELECT COUNT(*) from users;`
 
-func UsersCount() (models.LeadersInfo, error) {
+func UsersCount() (*models.LeadersInfo, error) {
 	var info models.LeadersInfo
 	err := connection.QueryRow(selectUsersCount).Scan(&info.Count)
+	ptrInfo := new(models.LeadersInfo)
 	if err != nil {
 		helpers.LogMsg(err)
-		return info, err
+		ptrInfo.ID = info.ID
+		ptrInfo.Count = info.Count
+		ptrInfo.UsersOnPage = info.UsersOnPage
+		return ptrInfo, err
 	}
 	info.UsersOnPage = usersPerPage
-	return info, nil
+	ptrInfo.ID = info.ID
+	ptrInfo.Count = info.Count
+	ptrInfo.UsersOnPage = info.UsersOnPage
+	return ptrInfo, nil
 }
 
 const iterateGame = `

@@ -20,22 +20,30 @@ import (
 var SECRET []byte
 
 type AuthManager struct {
-	mu    sync.RWMutex
-	token *models.JWT
-	user  *models.User
+
+	mu       sync.RWMutex
+	token 	 *models.JWT
+	user     *models.User
+	userArray *models.UsersArray
+	leaders *models.LeadersInfo
+
 }
 
 func NewAuthManager() *AuthManager {
 	return &AuthManager{
-		mu:    sync.RWMutex{},
-		token: new(models.JWT),
-		user:  new(models.User),
+
+		mu:       sync.RWMutex{},
+		token:    new(models.JWT),
+		user:     new(models.User),
+		userArray: new(models.UsersArray),
+		leaders: new(models.LeadersInfo),
+
 	}
 }
 
 //TODO check error returns
 
-func (am *AuthManager) LoginUser(ctx context.Context, user *models.UserProto) (*models.JWT, error) {
+func (am *AuthManager) LoginUser(ctx context.Context, user *models.User) (*models.JWT, error) {
 	found, _ := db.GetUserByEmail(user.Email)
 
 	if found == nil {
@@ -64,7 +72,7 @@ func (am *AuthManager) LoginUser(ctx context.Context, user *models.UserProto) (*
 	return am.token, nil
 }
 
-func (am *AuthManager) RegisterUser(ctx context.Context, user *models.UserProto) (*models.JWT, error) {
+func (am *AuthManager) RegisterUser(ctx context.Context, user *models.User) (*models.JWT, error) {
 	foundByEmail, _ := db.GetUserByEmail(user.Email)
 	foundByLogin, _ := db.GetUserByLogin(user.Login)
 
@@ -74,7 +82,7 @@ func (am *AuthManager) RegisterUser(ctx context.Context, user *models.UserProto)
 
 	user.HashPassword = helpers.HashPassword(user.Password)
 
-	err := db.CreateUser(helpers.ProtoToModel(user))
+	err := db.CreateUser(user)
 	if err != nil {
 		helpers.LogMsg(err)
 		return nil, status.Errorf(codes.Internal, "Server error")
@@ -98,7 +106,7 @@ func (am *AuthManager) RegisterUser(ctx context.Context, user *models.UserProto)
 	return am.token, nil
 }
 
-func (am *AuthManager) GetUser(ctx context.Context, token *models.JWT) (*models.UserProto, error) {
+func (am *AuthManager) GetUser(ctx context.Context, token *models.JWT) (*models.User, error) {
 	t, _ := jwt.Parse(token.Token, func(token *jwt.Token) (interface{}, error) {
 		return SECRET, nil
 	})
@@ -112,11 +120,22 @@ func (am *AuthManager) GetUser(ctx context.Context, token *models.JWT) (*models.
 	if user == nil {
 		return nil, status.Errorf(codes.Unknown, "Unauthorized")
 	}
-	return helpers.ModelToProto(user), nil
+	return user, nil
 }
 
-func (am *AuthManager) ChangeUser(ctx context.Context, user *models.UserProto) (*models.Nothing, error) {
-	_, err := db.UpdateUserByID(helpers.ProtoToModel(user), uint(user.ID))
+func (am *AuthManager) GetUserArray(ctx context.Context, leaders *models.LeadersInfo) (*models.UsersArray, error) {
+	am.userArray.Users, _ = db.GetLeaders(int(leaders.ID))
+	//fmt.Println(err)
+	return am.userArray, nil
+}
+
+func (am *AuthManager) GetUserCountInfo(ctx context.Context, nothing *models.Nothing) (*models.LeadersInfo, error) {
+	am.leaders, _ = db.UsersCount()
+	return am.leaders, nil
+}
+
+func (am *AuthManager) ChangeUser(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	_, err := db.UpdateUserByID(user, uint(user.ID))
 	if err != nil {
 		return nil, status.Errorf(codes.AlreadyExists, "Such user already exists")
 	}
