@@ -12,7 +12,7 @@ import (
 
 func setConfig() string {
 	viper.AddConfigPath("./configs")
-	viper.SetConfigName("auth")
+	viper.SetConfigName("config")
 	var port string
 	if err := viper.ReadInConfig(); err != nil {
 		port = ":8083"

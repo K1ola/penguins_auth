@@ -3,6 +3,7 @@ package database
 import (
 	"auth/helpers"
 	sq "database/sql"
+	"fmt"
 	"strconv"
 
 	"github.com/jackc/pgx"
@@ -31,12 +32,14 @@ func initConfig() error {
 		Port:     uint16(viper.GetInt("db.port")),
 		Database: viper.GetString("db.database"),
 		User:     viper.GetString("db.user"),
+		Password: viper.GetString("db.password"),
 	}
 	psqlURI := "postgresql://" + connectionConfig.User
 	if len(connectionConfig.Password) > 0 {
 		psqlURI += ":" + connectionConfig.Password
 	}
 	psqlURI += "@" + connectionConfig.Host + ":" + strconv.Itoa(int(connectionConfig.Port)) + "/" + connectionConfig.Database + "?sslmode=disable"
+	fmt.Println(psqlURI)
 	var err error
 	connection, err = sq.Open("postgres", psqlURI)
 	if err != nil {
