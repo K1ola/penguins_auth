@@ -182,7 +182,7 @@ WHERE email = $1`
 const newPersonalRecord = `
 UPDATE users
 SET games = games + 1,
-	score = $2
+	score = score + $2
 WHERE email = $1`
 
 func AddGame(email string) error {

@@ -4,6 +4,7 @@ import (
 	db "auth/database"
 	"auth/helpers"
 	"auth/models"
+	"fmt"
 
 	"github.com/dgrijalva/jwt-go"
 
@@ -144,5 +145,24 @@ func (am *AuthManager) ChangeUser(ctx context.Context, user *models.User) (*mode
 
 //TODO DeleteUser() is needed?
 func (am *AuthManager) DeleteUser(ctx context.Context, token *models.JWT) (*models.Nothing, error) {
+	return &models.Nothing{}, nil
+}
+
+func (am *AuthManager) SaveUserGame(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	//oldUser, _ := db.GetUserByLogin(user.Login)
+	fmt.Println(user.Login, " has ", user.Score)
+	//if user.Score > oldUser.Score {
+		err := db.NewRecord(user.Email, int(user.Score))
+		if err != nil {
+			return nil, status.Errorf(codes.DataLoss, "Error setting record")
+		}
+	//} else {
+	//	err := db.AddGame(user.Email)
+	//	if err != nil {
+	//		return nil, status.Errorf(codes.DataLoss, "Error incrementing game")
+	//	}
+	//}
+
+	fmt.Println("--------------------------")
 	return &models.Nothing{}, nil
 }
