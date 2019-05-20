@@ -136,10 +136,11 @@ func (am *AuthManager) GetUserCountInfo(ctx context.Context, nothing *models.Not
 }
 
 func (am *AuthManager) ChangeUser(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	//TODO fix uploading pictures
 	err := db.UpdateImage(user.Login, user.Picture)
 	if err != nil {
 		fmt.Println(err)
-		return nil, status.Errorf(codgit es.AlreadyExists, "Such user already exists")
+		return nil, status.Errorf(codes.AlreadyExists, "Such user already exists")
 	}
 	_, err = db.UpdateUserByID(user, uint(user.ID))
 	if err != nil {
