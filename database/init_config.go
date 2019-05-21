@@ -15,7 +15,7 @@ var connection *sq.DB = nil
 
 var connectionConfig pgx.ConnConfig
 var connectionPoolConfig = pgx.ConnPoolConfig{
-	MaxConnections: 8,
+	MaxConnections: 80,
 }
 
 var ImagesAddress string
