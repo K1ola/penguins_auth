@@ -3,6 +3,7 @@ package database
 import (
 	"auth/helpers"
 	"auth/models"
+	"fmt"
 	"strconv"
 
 	"github.com/jackc/pgx"
@@ -87,8 +88,7 @@ const selectByEmail = `
 SELECT users.id, login, email, hashpassword, score, name, games
 FROM users, pictures
 WHERE users.email = $1
-AND users.picture = pictures.id
-ORDER BY ABS(users.score-users.games)`
+AND users.picture = pictures.id`
 
 func GetUserByEmail(email string) (*models.User, error) {
 	var user models.User
@@ -134,23 +134,24 @@ func GetUserByLogin(login string) (*models.User, error) {
 	return &user, nil
 }
 
-const usersPerPage = 3
+const usersPerPage = 6
 
 var getLeadersPage = `
 SELECT login, score, email
 FROM users
-ORDER BY score DESC
+ORDER BY ABS(score-games) DESC
 LIMIT ` + strconv.Itoa(usersPerPage) + ` OFFSET $1`
 
 func GetLeaders(id int) ([]*models.User, error) {
 	var users []*models.User
-	rows, err := Query(getLeadersPage, (id-1)*3)
+	rows, err := Query(getLeadersPage, (id-1)*usersPerPage)
 	if err != nil {
 		helpers.LogMsg(err)
 		return users, err
 	}
 
 	users = RowsToUsers(rows)
+	fmt.Println(users)
 	return users, nil
 }
 
