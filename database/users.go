@@ -87,7 +87,8 @@ const selectByEmail = `
 SELECT users.id, login, email, hashpassword, score, name, games
 FROM users, pictures
 WHERE users.email = $1
-AND users.picture = pictures.id`
+AND users.picture = pictures.id
+ORDER BY ABS(users.score-users.games)`
 
 func GetUserByEmail(email string) (*models.User, error) {
 	var user models.User
