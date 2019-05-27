@@ -1,20 +1,21 @@
 package database
 
 import (
-	"auth/helpers"
 	"auth/models"
-	"database/sql"
+	"fmt"
+
+	"github.com/jackc/pgx"
 )
 
-func RowsToUsers(rows *sql.Rows) []*models.User {
+func RowsToUsers(rows *pgx.Rows) []*models.User {
 	users := []*models.User{}
-	defer rows.Close()
 	for rows.Next() {
-		entry := new(models.User)
+		entry := models.User{}
 		if err := rows.Scan(&entry.Login, &entry.Score, &entry.Email); err == nil {
-			helpers.LogMsg(err)
+			fmt.Println(err)
 		}
-		users = append(users, entry)
+		users = append(users, &entry)
 	}
+	rows.Close()
 	return users
 }

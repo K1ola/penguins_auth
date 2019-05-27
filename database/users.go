@@ -149,7 +149,6 @@ func GetLeaders(id int) ([]*models.User, error) {
 		helpers.LogMsg(err)
 		return users, err
 	}
-
 	users = RowsToUsers(rows)
 	fmt.Println(users)
 	return users, nil
