@@ -71,12 +71,37 @@ func UpdateUserByID(user *models.User, id uint) (*models.User, error) {
 	return user, nil
 }
 
-const updateImageByLogin = `
-SELECT insertPicture($1, $2);
-`
+// const updateImageByLogin = `
+// SELECT insertPicture($1, $2);
+// `
+
+// func UpdateImage(login string, avatar string) error {
+// 	_, err := Exec(updateImageByLogin, login, avatar)
+// 	if err != nil {
+// 		helpers.LogMsg(err)
+// 		return err
+// 	}
+// 	return nil
+// }
+
+const insertPicture = `
+INSERT INTO pictures (name)
+VALUES ($1)
+RETURNING id`
+
+const updateUserPicture = `
+UPDATE users
+SET picture = ($1)
+WHERE login = $2`
 
 func UpdateImage(login string, avatar string) error {
-	_, err := Exec(updateImageByLogin, login, avatar)
+	var id int
+	err := connection.QueryRow(insertPicture, avatar).Scan(&id)
+	if err != nil {
+		helpers.LogMsg(err)
+		return err
+	}
+	_, err = Exec(updateUserPicture, id, login)
 	if err != nil {
 		helpers.LogMsg(err)
 		return err

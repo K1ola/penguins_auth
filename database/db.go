@@ -10,13 +10,7 @@ func Query(sql string, args ...interface{}) (*sql.Rows, error) {
 	if connection == nil {
 		return nil, pgx.ErrDeadConn
 	}
-
-	tx, err := connection.Begin()
-	if err != nil {
-		return nil, err
-	}
-
-	rows, err := tx.Query(sql, args...)
+	rows, err := connection.Query(sql, args...)
 	return rows, err
 }
 
