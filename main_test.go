@@ -13,7 +13,7 @@ import (
 
 func TestAuthManager(t *testing.T) {
 	manager := NewAuthManager()
-	var user models.UserProto
+	var user models.User
 	var ctx context.Context
 	user.Login = time.Now().Format("20060102150405") + user.Login
 	user.Email = time.Now().Format("20060102150405") + user.Email
@@ -50,7 +50,7 @@ func TestAuthManager(t *testing.T) {
 
 func TestRegister(t *testing.T) {
 	manager := NewAuthManager()
-	var user models.UserProto
+	var user models.User
 	var ctx context.Context
 	user.Login = time.Now().Format("20060102150405") + user.Login
 	user.Email = time.Now().Format("20060102150405") + user.Email

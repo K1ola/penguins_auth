@@ -67,7 +67,7 @@ func UpdateUserByID(user *models.User, id uint) (*models.User, error) {
 		helpers.LogMsg(err)
 		return user, err
 	}
-	user.Picture = ImagesAddress + user.Picture
+	//user.Picture = ImagesAddress + user.Picture
 	return user, nil
 }
 
@@ -138,7 +138,7 @@ func GetUserByID(id uint) (*models.User, error) {
 		helpers.LogMsg(err)
 		return nil, err
 	}
-	user.Picture = ImagesAddress + user.Picture
+	//user.Picture = ImagesAddress + user.Picture
 	return &user, nil
 }
 
