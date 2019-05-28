@@ -137,8 +137,17 @@ func (am *AuthManager) GetUserCountInfo(ctx context.Context, nothing *models.Not
 
 func (am *AuthManager) ChangeUser(ctx context.Context, user *models.User) (*models.Nothing, error) {
 	_, err := db.UpdateUserByID(user, uint(user.ID))
+	err = db.UpdateImage(user.Login, user.Picture)
 	if err != nil {
 		return nil, status.Errorf(codes.AlreadyExists, "Such user already exists")
+	}
+	return &models.Nothing{}, nil
+}
+
+func (am *AuthManager) ChangeUserPicture(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	err := db.UpdateImage(user.Login, user.Picture)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Unknown error")
 	}
 	return &models.Nothing{}, nil
 }
