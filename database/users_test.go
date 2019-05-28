@@ -5,7 +5,6 @@ import (
 	"auth/models"
 	"testing"
 	"time"
-
 	sqlmock "github.com/DATA-DOG/go-sqlmock"
 )
 
@@ -141,4 +140,11 @@ func TestCreateUser(t *testing.T) {
 	
 	Disconnect()
 	initConfig()
+}
+
+func TestExtraDB(t *testing.T)  {
+	// initConfig()
+	Connect()
+	GetLeaders(1)
+
 }

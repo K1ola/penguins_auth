@@ -159,7 +159,7 @@ func (am *AuthManager) DeleteUser(ctx context.Context, token *models.JWT) (*mode
 
 func (am *AuthManager) SaveUserGame(ctx context.Context, user *models.User) (*models.Nothing, error) {
 	//oldUser, _ := db.GetUserByLogin(user.Login)
-	fmt.Println(user.Login, " has ", user.Score)
+	// fmt.Println(user.Login, " has ", user.Score)
 	//if user.Score > oldUser.Score {
 		err := db.NewRecord(user.Email, int(user.Score))
 		if err != nil {

@@ -46,6 +46,18 @@ func TestAuthManager(t *testing.T) {
 	manager.GetUser(ctx, jwt)
 	manager.DeleteUser(ctx, jwt)
 
+	leaders := models.LeadersInfo{
+		ID: 3,
+	}
+	manager.GetUserArray(ctx, &leaders)
+
+	nothing := models.Nothing{}
+	manager.GetUserCountInfo(ctx, &nothing)
+
+	user.Email = ""
+	user.Score = 10
+	manager.ChangeUserPicture(ctx, &user)
+	// manager.SaveUserGame(ctx, &user)
 }
 
 func TestRegister(t *testing.T) {

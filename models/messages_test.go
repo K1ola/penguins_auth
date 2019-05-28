@@ -26,6 +26,7 @@ func TestString(t *testing.T) {
 	user.GetLogin()
 	user.GetPicture()
 	user.GetScore()
+	user.GetCount()
 	user = nil
 
 	user.GetEmail()
@@ -35,6 +36,8 @@ func TestString(t *testing.T) {
 	user.GetLogin()
 	user.GetPicture()
 	user.GetScore()
+	user.GetCount()
+
 
 	jwt := &JWT{}
 	jwt.Reset()
