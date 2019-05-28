@@ -8,7 +8,7 @@ import (
 )
 
 func TestString(t *testing.T) {
-	user := &UserProto{}
+	user := &User{}
 	user.Reset()
 	user.String()
 	user.ProtoMessage()
@@ -60,6 +60,24 @@ func TestString(t *testing.T) {
 	nothing.XXX_Size()
 	nothing.XXX_DiscardUnknown()
 	nothing.XXX_Merge(message)
+
+	info := &LeadersInfo{}
+	info.Reset()
+	info.String()
+	info.ProtoMessage()
+	info.Descriptor()
+	info.XXX_Unmarshal([]byte(""))
+	info.XXX_Marshal([]byte(""), true)
+	info.XXX_Size()
+	info.XXX_DiscardUnknown()
+	info.XXX_Merge(message)
+	info.GetID()
+	info.GetCount()
+	info.GetUsersOnPage()
+	info = nil
+	info.GetID()
+	info.GetCount()
+	info.GetUsersOnPage()
 
 	var cc *grpc.ClientConn
 	_ = NewAuthCheckerClient(cc)
