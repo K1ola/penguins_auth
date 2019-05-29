@@ -24,9 +24,9 @@ func Exec(sql string, args ...interface{}) (commandTag sql.Result, err error) {
 		return tag, err
 	}
 	err = tx.Commit()
-	if err != nil {
-		return tag, err
-	}
+	// if err != nil {
+	// 	return tag, err
+	// }
 
 	return tag, nil
 }

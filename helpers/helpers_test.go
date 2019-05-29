@@ -3,6 +3,9 @@ package helpers
 import (
 	// "auth/models"
 	"testing"
+	// "net/http/httptest"
+	// "net/http"
+	// "time"
 )
 
 func TestPasswords(t *testing.T) {
@@ -18,3 +21,14 @@ func TestPasswords(t *testing.T) {
 func TestLogs(t *testing.T) {
 	LogMsg("hello world")
 }
+
+// func TestDelCookie(t *testing.T)  {
+// 	var w *http.ResponseWriter
+// 	cookie := &http.Cookie{
+// 		Name:     "sessionid",
+// 		Value:    "hjebvjhfdbvikjdf",
+// 		Expires:  time.Now(),
+// 		HttpOnly: true,
+// 	}
+// 	DeleteCookie(w, cookie)
+// }

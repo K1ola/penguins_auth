@@ -23,10 +23,10 @@ var ImagesAddress string
 func initConfig() error {
 	viper.AddConfigPath("./configs")
 	viper.SetConfigName("config")
-	if err := viper.ReadInConfig(); err != nil {
-		helpers.LogMsg("Can't find db config: ", err)
-		return err
-	}
+	_ = viper.ReadInConfig() //; err != nil {
+	// 	helpers.LogMsg("Can't find db config: ", err)
+	// 	return err
+	// }
 	connectionConfig = pgx.ConnConfig{
 		Host:     viper.GetString("db.host"),
 		Port:     uint16(viper.GetInt("db.port")),
@@ -35,17 +35,15 @@ func initConfig() error {
 		Password: viper.GetString("db.password"),
 	}
 	psqlURI := "postgresql://" + connectionConfig.User
-	if len(connectionConfig.Password) > 0 {
-		psqlURI += ":" + connectionConfig.Password
-	}
 	psqlURI += "@" + connectionConfig.Host + ":" + strconv.Itoa(int(connectionConfig.Port)) + "/" + connectionConfig.Database + "?sslmode=disable"
 	fmt.Println(psqlURI)
 	var err error
 	connection, err = sq.Open("postgres", psqlURI)
-	if err != nil {
-		helpers.LogMsg("Can't connect to db: ", err)
-		return err
-	}
+	// if err != nil {
+	// 	helpers.LogMsg("Can't connect to db: ", err)
+	// 	return err
+	// }
+	fmt.Println(err)
 	viper.SetConfigName("fileserver")
 	if err := viper.ReadInConfig(); err != nil {
 		helpers.LogMsg("Can't find images address: ", err)
@@ -63,10 +61,10 @@ func Connect() error {
 	if connection != nil {
 		return nil
 	}
-	err := initConfig()
-	if err != nil {
-		return err
-	}
+	_ = initConfig()
+	// if err != nil {
+	// 	return err
+	// }
 	return nil
 }
 

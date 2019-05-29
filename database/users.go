@@ -222,6 +222,7 @@ func AddGame(email string) error {
 }
 
 func NewRecord(email string, record int) error {
+	// var err error
 	_, err := Exec(newPersonalRecord, email, record)
 	if err != nil {
 		helpers.LogMsg(err)

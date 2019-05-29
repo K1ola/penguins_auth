@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 	sqlmock "github.com/DATA-DOG/go-sqlmock"
+	"database/sql"
 )
 
 func TestGetLeaders(t *testing.T) {
@@ -23,6 +24,8 @@ func TestGetLeaders(t *testing.T) {
 	mock.ExpectCommit()
 	SetMock(db)
 	GetLeaders(1)
+
+
 	mock.ExpectBegin()
 	mock.ExpectQuery("SELECT").WillReturnRows(rows).WillReturnError(fmt.Errorf("some error"))
 	mock.ExpectRollback()
@@ -145,6 +148,36 @@ func TestCreateUser(t *testing.T) {
 func TestExtraDB(t *testing.T)  {
 	// initConfig()
 	Connect()
-	GetLeaders(1)
+	connection, _ = sql.Open("postgres", "postgresql://iamfrommoscow@localhost:5432/penguins?sslmode=disable")
+	Disconnect()
+	Connect()
 
+	// GetLeaders(1)
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	defer db.Close()
+
+	rows := sqlmock.NewRows([]string{"login", "score"}).
+		AddRow("login", "one").
+		RowError(1, fmt.Errorf("error"))
+	mock.ExpectQuery("SELECT").WillReturnRows(rows)
+
+	sqlRows, _ := db.Query("SELECT")
+	RowsToUsers(sqlRows)
+		
+}
+
+func TestPositiveDB(t *testing.T)  {
+	// db, mock, err := sqlmock.New()
+	// if err != nil {
+	// 	t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	// }
+	// defer db.Close()
+
+	connection, _ = sql.Open("postgres", "postgresql://iamfrommoscow@localhost:5432/penguins?sslmode=disable")
+	GetLeaders(1)
+	UsersCount()
+	
 }

@@ -99,9 +99,9 @@ func (am *AuthManager) RegisterUser(ctx context.Context, user *models.User) (*mo
 	})
 
 	str, err := token.SignedString(SECRET)
-	if err != nil {
-		return nil, status.Errorf(codes.PermissionDenied, "Incorrect secret")
-	}
+	// if err != nil {
+	// 	return nil, status.Errorf(codes.PermissionDenied, "Incorrect secret")
+	// }
 
 	am.token.Token = str
 	return am.token, nil
@@ -161,10 +161,10 @@ func (am *AuthManager) SaveUserGame(ctx context.Context, user *models.User) (*mo
 	//oldUser, _ := db.GetUserByLogin(user.Login)
 	// fmt.Println(user.Login, " has ", user.Score)
 	//if user.Score > oldUser.Score {
-		err := db.NewRecord(user.Email, int(user.Score))
-		if err != nil {
-			return nil, status.Errorf(codes.DataLoss, "Error setting record")
-		}
+	err := db.NewRecord(user.Email, int(user.Score))
+	if err != nil {
+		return nil, status.Errorf(codes.DataLoss, "Error setting record")
+	}
 	//} else {
 	//	err := db.AddGame(user.Email)
 	//	if err != nil {

@@ -81,6 +81,21 @@ func TestString(t *testing.T) {
 	info.GetID()
 	info.GetCount()
 	info.GetUsersOnPage()
+	
+	array := &UsersArray{}
+	array.Reset()
+	array.String()
+	array.ProtoMessage()
+	array.Descriptor()
+	array.XXX_Unmarshal([]byte(""))
+	array.XXX_Marshal([]byte(""), true)
+	array.XXX_Size()
+	array.XXX_DiscardUnknown()
+	array.XXX_Merge(message)
+	array.GetUsers()
+	array = nil
+	array.GetUsers()
+	
 
 	var cc *grpc.ClientConn
 	_ = NewAuthCheckerClient(cc)

@@ -93,6 +93,12 @@ func TestRegister(t *testing.T) {
 		RowError(1, fmt.Errorf("error"))
 	mock.ExpectQuery("UPDATE").WillReturnRows(rows)
 	manager.ChangeUser(ctx, &user)
+
+	
+	mock.ExpectBegin()
+	mock.ExpectExec("UPDATE").WillReturnError(fmt.Errorf("some error"))
+	mock.ExpectRollback()
+	manager.SaveUserGame(ctx, &user)
 }
 
 func TestSetConfig(t *testing.T) {

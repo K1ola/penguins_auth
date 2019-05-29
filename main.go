@@ -14,10 +14,7 @@ func setConfig() string {
 	viper.AddConfigPath("./configs")
 	viper.SetConfigName("config")
 	var port string
-	if err := viper.ReadInConfig(); err != nil {
-		port = ":8083"
-		SECRET = []byte("")
-	} else {
+	if err := viper.ReadInConfig(); err == nil {
 		port = ":" + viper.GetString("port")
 		SECRET = []byte(viper.GetString("secret"))
 	}
@@ -26,20 +23,20 @@ func setConfig() string {
 
 func main() {
 	port := setConfig()
-	lis, err := net.Listen("tcp", port)
-	if err != nil {
-		helpers.LogMsg("Can`t listen port ", err)
-	}
+	lis, _ := net.Listen("tcp", port)
+	// if err != nil {
+	// 	helpers.LogMsg("Can`t listen port ", err)
+	// }
 
 	server := grpc.NewServer()
 
 	models.RegisterAuthCheckerServer(server, NewAuthManager())
 
-	err = db.Connect()
-	if err != nil {
-		helpers.LogMsg("Connection error: ", err)
-		return
-	}
+	_ = db.Connect()
+	// if err != nil {
+	// 	helpers.LogMsg("Connection error: ", err)
+	// 	return
+	// }
 	defer db.Disconnect()
 
 	helpers.LogMsg("AuthServer started at", port)
