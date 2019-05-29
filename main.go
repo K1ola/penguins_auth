@@ -34,6 +34,7 @@ func main() {
 	server := grpc.NewServer()
 
 	models.RegisterAuthCheckerServer(server, NewAuthManager())
+	UsersWantToPlay = make(map[string]*models.User)
 
 	err = db.Connect()
 	if err != nil {

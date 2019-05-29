@@ -32,7 +32,6 @@ type AuthManager struct {
 
 func NewAuthManager() *AuthManager {
 	return &AuthManager{
-
 		mu:       sync.RWMutex{},
 		token:    new(models.JWT),
 		user:     new(models.User),
@@ -41,6 +40,8 @@ func NewAuthManager() *AuthManager {
 
 	}
 }
+
+var UsersWantToPlay map[string]*models.User
 
 //TODO check error returns
 
@@ -175,3 +176,28 @@ func (am *AuthManager) SaveUserGame(ctx context.Context, user *models.User) (*mo
 	fmt.Println("--------------------------")
 	return &models.Nothing{}, nil
 }
+
+//here JWT is already valid
+func (am *AuthManager) AddUserToGame(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	if UsersWantToPlay[user.Login] != nil {
+		return nil, status.Errorf(codes.AlreadyExists, "Such user already exists")
+	}
+	UsersWantToPlay[user.Login] = user
+	return &models.Nothing{}, nil
+}
+
+func (am *AuthManager) GetUserForGame(ctx context.Context, user *models.User) (*models.User, error) {
+	if UsersWantToPlay[user.Login] != nil {
+		return UsersWantToPlay[user.Login], nil
+	}
+	return &models.User{}, nil
+}
+
+func (am *AuthManager) DeleteUserFromGame(ctx context.Context, user *models.User) (*models.Nothing, error) {
+	if UsersWantToPlay[user.Login] != nil {
+		delete(UsersWantToPlay, user.Login)
+		return &models.Nothing{}, nil
+	}
+	return nil, status.Errorf(codes.NotFound, "Such user is not in game")
+}
+
