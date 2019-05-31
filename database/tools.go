@@ -11,7 +11,7 @@ func RowsToUsers(rows *sql.Rows) []*models.User {
 	defer rows.Close()
 	for rows.Next() {
 		entry := new(models.User)
-		if err := rows.Scan(&entry.Login, &entry.Score, &entry.Email); err == nil {
+		if err := rows.Scan(&entry.Login, &entry.Score, &entry.Email, &entry.Count); err == nil {
 			helpers.LogMsg(err)
 		}
 		users = append(users, entry)

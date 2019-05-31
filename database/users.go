@@ -162,7 +162,7 @@ func GetUserByLogin(login string) (*models.User, error) {
 const usersPerPage = 6
 
 var getLeadersPage = `
-SELECT login, score, email
+SELECT login, score, email, games
 FROM users
 ORDER BY ABS(score-games) DESC
 LIMIT ` + strconv.Itoa(usersPerPage) + ` OFFSET $1`
