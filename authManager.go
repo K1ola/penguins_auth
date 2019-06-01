@@ -190,7 +190,7 @@ func (am *AuthManager) GetUserForGame(ctx context.Context, user *models.User) (*
 	if UsersWantToPlay[user.Login] != nil {
 		return UsersWantToPlay[user.Login], nil
 	}
-	return &models.User{}, nil
+	return nil, nil
 }
 
 func (am *AuthManager) DeleteUserFromGame(ctx context.Context, user *models.User) (*models.Nothing, error) {
